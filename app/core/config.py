@@ -12,4 +12,4 @@ class Settings(BaseModel):
 
     metrics_port: int = int(os.getenv("METRICS_PORT", "8001"))
 
-settings = Settings()
+# settings = Settings()
