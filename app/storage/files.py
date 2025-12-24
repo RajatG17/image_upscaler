@@ -1,8 +1,8 @@
 from pathlib import Path
 import uuid
-from app.core.config import Settings
+from app.core.config import settings
 
-settings = Settings()
+# settings = Settings()
 
 def ensure_dirs():
     Path(settings.data_dir, "inputs").mkdir(parents=True, exist_ok=True)
