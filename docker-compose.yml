@@ -1,0 +1,47 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATA_DIR=/data
+      - DEFAULT_SCALE=4
+      - TITLE_SIZE=256
+      - TITLE_OVERLAP=32
+    volumes:
+      - ./data:/data
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+  
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATA_DIR=/data
+      - DEFAULT_SCALE=4
+      - TILE_SIZE=256
+      - TILE_OVERLAP=32
+    volumes:
+      - ./data:/data
+    depends_on:
+      - redis
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+      

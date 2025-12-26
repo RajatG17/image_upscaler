@@ -1,0 +1,4 @@
+- `data_prep/build_portrait_dataset.py`: scan images, detect faces, save crops
+- `data_prep/degradations.py`: generate LR from HR
+- `train/train_stub.py`: wire up BasicSR/Real-ESRGAN training config (you’ll plug in later)
+- `eval/eval_stub.py`: render side-by-sides on a fixed portrait set
